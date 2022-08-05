@@ -6,13 +6,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class UserController {
 	
+	//회원가입
 	@GetMapping("/user/signup/view")
 	public String singupView() {
 		return "user/signup";			
 	}
 	
-	@GetMapping("/user/signin/view")
-	public String signinView() {
-		return "user/signin";
-	}
 }

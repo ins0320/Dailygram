@@ -15,90 +15,29 @@
 	<link rel="stylesheet" href="/static/css/style.css" type="text/css">
 </head>
 <body>
-	
 	<div id="wrap">
-		<c:import url="/WEB-INF/jsp/include/header.jsp" />
-		<section class="content d-flex justify-content-center">
-			<div class="col-4 py-5">
-				<h1 class="text-center">dailygram</h1>
-				<h3 class="text-center">일상을 공유하려면 가입하세요.</h3>
-								<input type="text" class="form-control mt-3" id="nameInput" placeholder="사용자 이름">
-				<input type="text" class="form-control mt-3" id="idInput" placeholder="아이디">
-				<input type="password" class="form-control mt-3" id="passwordInput" placeholder="비밀번호">
-				<input type="text" class="form-control mt-3" id="emailInput" placeholder="이메일 주소">
-				
-				<button type="button" id="joinBtn" class="btn btn-info btn-block mt-3">회원가입</button>
+		<header>
+			<logo><h2 class=" bg-secondary">dailygram</h2></logo>
+		</header>
+		<section class="bg-info d-flex justify-content-center">
+			<div class="bg-warning">
+				<h1 class="mt-3 display-3">dailygram</h1>
+				<h5 class="mt-3">일상을 공유하려면 가입하세요.</h5>
+				<div class="d-flex mt-5">
+					<input type="text" class="form-control col-8" placeholder="사용자 이름">
+					<button type="button" class="btn btn-info col-4 ">중복확인</button>
+				</div>
+				<input type="text" class="form-control mt-5" placeholder="아이디">
+				<input type="text" class="form-control mt-5" placeholder="비밀번호">
+				<input type="text" class="form-control mt-5" placeholder="이메일주소">
 			</div>
-		
 		</section>
-		
-		<c:import url="/WEB-INF/jsp/include/footer.jsp" />
-	
+		<footer class="text-center bg-secondary">
+			copyright  © 2022 dailygram
+		</footer>	
 	</div>
 	
-	<script>
-		$(document).ready(function() {
-			$("#joinBtn").on("click", function() {
-				let id = $("#idInput").val();
-				let password = $("#passwordInput").val();
-				let passwordConfirm = $("#passwordConfirmInput").val();
-				let name = $("#nameInput").val();
-				let email = $("#emailInput").val();
-				
-				if(id == "") {
-					alert("아이디를 입력하세요!!");
-					return;
-				}
-				
-				if(password == "") {
-					alert("비밀번호를 입력하세요");
-					return;
-				}
-				
-				if(password != passwordConfirm) {
-					alert("비밀번호가 일치하지 않습니다");
-					return;
-				}
-				
-				if(name == "") {
-					alert("이름을 입력하세요");
-					return;
-				}
-				
-				if(email == "") {
-					alert("이메일을 입력하세요");
-					return;
-				}
-				
-				// 입력된 데이터를 회원 가입 api 로 가입을 진행한다. 
-				$.ajax({
-					type:"post",
-					url:"/user/signup",
-					data:{"loginId":id, "password":password, "name":name, "email":email},
-					success:function(data) {
-						if(data.result == "success") {
-							location.href = "/user/signin/view";
-						} else {
-							alert("회원가입 실패");
-						}
-						
-					},
-					error:function() {
-						
-						alert("회원가입 에러!!");
-					}
-					
-				});
-				
-				
-				
-			});
 			
-			
-		});
-	
-	
-	</script>
 	
 	
 </body>

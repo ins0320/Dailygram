@@ -1,1 +1,23 @@
 @charset "UTF-8";
+
+#wrap{
+	
+	width:1200px;
+	height:800px;
+	margin:auto;
+}
+
+logo{
+	font-weight:bold;
+	width:1200px;
+	height:50px;
+}
+section{
+	width:1200px;
+	height:700px;
+}
+
+footer{
+	width:1200px;
+	height:50px;
+}

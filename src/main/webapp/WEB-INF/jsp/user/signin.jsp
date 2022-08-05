@@ -34,9 +34,60 @@
 	</div>
 	
 	<script>
-		
+		$(document).ready(function() {
+			$("#joinBtn").on("click", function() {
+				let id = $("#idInput").val();
+				let password = $("#passwordInput").val();
+				let passwordConfirm = $("#passwordConfirmInput").val();
+				
+				
+				if(id == "") {
+					alert("아이디를 입력하세요!!");
+					return;
+				}
+				
+				if(password == "") {
+					alert("비밀번호를 입력하세요");
+					return;
+				}
+				
+				if(password != passwordConfirm) {
+					alert("비밀번호가 일치하지 않습니다");
+					return;
+				}
+				
+				
+				// 입력된 데이터를 회원 가입 api 로 가입을 진행한다. 
+				$.ajax({
+					type:"post",
+					url:"/user/signup",
+					data:{"loginId":id, "password":password, "name":name, "email":email},
+					success:function(data) {
+						if(data.result == "success") {
+							location.href = "/user/signin/view";
+						} else {
+							alert("아이디/ 비밀번호를 확인하세요");
+						}
+						
+					},
+					error:function() {
+						
+						alert("로그인 에러!!");
+					}
+					
+				});
+				
+				
+				
+			});
+			
+			
+		});
+	
 	
 	</script>
+	
+	
 
 </body>
 </html>
