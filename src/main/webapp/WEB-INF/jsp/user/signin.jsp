@@ -19,7 +19,7 @@
 		<c:import url="/WEB-INF/jsp/include/header.jsp" />
 		<section class="content d-flex justify-content-center">
 			<div class="col-4 py-5">
-				<h1 class="text-center">로그인</h1>
+				<h1 class="text-center">dailygram</h1>
 				<input type="text" class="form-control mt-3" id="idInput" placeholder="아이디">
 				<input type="password" class="form-control mt-3" id="passwordInput" placeholder="비밀번호">
 				
