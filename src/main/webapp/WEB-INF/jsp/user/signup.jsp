@@ -17,25 +17,28 @@
 <body>
 	<div id="wrap">
 		<header>
-			<logo><h2 class=" bg-secondary">dailygram</h2></logo>
+			<c:import url="/WEB-INF/jsp/include/header.jsp" />
 		</header>
 		<section class="bg-info d-flex justify-content-center">
-			<div class="bg-warning">
-				<h1 class="mt-3 display-3">dailygram</h1>
-				<h5 class="mt-3">일상을 공유하려면 가입하세요.</h5>
+			<content class="bg-warning col-4">
+				<div class="mt-3 ml-3 display-3 dailygram">dailygram</div>
+				<h5 class="mt-3 ml-3">일상을 공유하려면 가입하세요.</h5>
 				<div class="d-flex mt-5">
+
 					<input type="text" class="form-control col-8" placeholder="사용자 이름">
-					<button type="button" class="btn btn-info col-4 ">중복확인</button>
+					<button type="button" class="btn btn-info col-4">중복확인</button>
 				</div>
-				<input type="text" class="form-control mt-5" placeholder="아이디">
-				<input type="text" class="form-control mt-5" placeholder="비밀번호">
-				<input type="text" class="form-control mt-5" placeholder="이메일주소">
-			</div>
+				<div>
+					<input type="text" class="form-control mt-5 col-8" placeholder="아이디">
+					<input type="text" class="form-control mt-5 col-8" placeholder="비밀번호">
+					<input type="text" class="form-control mt-5 col-8" placeholder="이메일주소">
+				</div>
+				<div class="d-lfex justify-content-center mt-5">
+					<button type="button" class="btn btn-info btn-block">중복확인</button>
+				</div>
+			</content>
 		</section>
-		<footer class="text-center bg-secondary">
-			copyright  © 2022 dailygram
-		</footer>	
-	</div>
+		<c:import url="/WEB-INF/jsp/include/foooter.jsp" />
 	
 			
 	

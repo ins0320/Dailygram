@@ -12,10 +12,19 @@ logo{
 	width:1200px;
 	height:50px;
 }
+.dailygram{
+	font-weight:bold;
+}
+
 section{
 	width:1200px;
 	height:700px;
 }
+img{
+	width: 50px;
+	height:50px;
+}
+	
 
 footer{
 	width:1200px;

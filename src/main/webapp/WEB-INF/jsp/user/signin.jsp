@@ -17,12 +17,16 @@
 <body>
 	<div id="wrap">
 		<c:import url="/WEB-INF/jsp/include/header.jsp" />
-		<section class="content d-flex justify-content-center">
-			<div class="col-4 py-5">
-				<h1 class="text-center">dailygram</h1>
-				<input type="text" class="form-control mt-3" id="idInput" placeholder="아이디">
-				<input type="password" class="form-control mt-3" id="passwordInput" placeholder="비밀번호">
-				
+		<section class="content d-flex justify-content-center bg-info">
+			<div class="col-4 bg-success mt-5">
+				<img src="https://images.pexels.com/photos/1267291/pexels-photo-1267291.jpeg">
+			</div>
+			<div class="col-4 mt-5 bg-warning">
+				<h1 class="text-center dailygram">dailygram</h1>
+				<div class="mt-5">
+					<input type="text" class="form-control mt-3" id="idInput" placeholder="아이디">
+					<input type="password" class="form-control mt-3" id="passwordInput" placeholder="비밀번호">
+				</div>
 				<button type="button" id="joinBtn" class="btn btn-info btn-block mt-3">로그인</button>
 				<div class="text-center mt-3">
 					<a href="/user/signup/view">회원가입</a>
