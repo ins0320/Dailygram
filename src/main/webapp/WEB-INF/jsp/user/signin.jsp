@@ -17,81 +17,79 @@
 <body>
 	<div id="wrap">
 		<c:import url="/WEB-INF/jsp/include/header.jsp" />
-		<section class="content d-flex justify-content-center bg-info">
-			<div class="col-4 bg-success mt-5">
-				<img src="https://images.pexels.com/photos/1267291/pexels-photo-1267291.jpeg">
+		<section class="content d-flex justify-content-center">
+			<div class="col-4 ">
+				<img src="https://images.pexels.com/photos/1267291/pexels-photo-1267291.jpeg" width="450">
 			</div>
-			<div class="col-4 mt-5 bg-warning">
-				<h1 class="text-center dailygram">dailygram</h1>
-				<div class="mt-5">
-					<input type="text" class="form-control mt-3" id="idInput" placeholder="아이디">
-					<input type="password" class="form-control mt-3" id="passwordInput" placeholder="비밀번호">
+			<div>
+				<div class="login-box d-flex justify-content-center align-items-start bg-white  border rounded">		
+					<div class="w-100 p-5">			
+						<h2 class="text-center dailygram">dailygram</h2>
+						<br>
+						<form id="loginForm">
+							<input type="text" id="loginIdInput" class="form-control mt-3" placeholder="아이디">
+							<input type="password" id="passwordInput" class="form-control mt-3" placeholder="패스워드">
+							<button id="loginBtn" type="submit" class="btn btn-primary btn-block mt-3">로그인</button>
+							<hr/>
+							<div class="mt-4 p-3 d-flex justify-content-center align-items-start bg-white  border rounded">
+							<a href="/user/signup/view">가입하기</a>
+						</form>
+					</div>
+					
 				</div>
-				<button type="button" id="joinBtn" class="btn btn-info btn-block mt-3">로그인</button>
-				<div class="text-center mt-3">
-					<a href="/user/signup/view">회원가입</a>
-				</div>
-			</div>	
-		
+			</div>
 		</section>
 		<c:import url="/WEB-INF/jsp/include/footer.jsp" />
 	</div>
 	
 	<script>
-		$(document).ready(function() {
-			$("#joinBtn").on("click", function() {
-				let id = $("#idInput").val();
-				let password = $("#passwordInput").val();
-				let passwordConfirm = $("#passwordConfirmInput").val();
+	$(document).ready(function() {
+		$("#loginForm").on("submit", function(e) {
+			// 해당 이벤트가 가지고 있는 기능을 비활성화 
+			e.preventDefault();
+			
+			// loginId 와 password 를 통해서 로그인 진행
+			// 로그인 api 호출
+			let loginId = $("#loginIdInput").val();
+			let password = $("#passwordInput").val();
+			
+			if(loginId == "") {
 				
-				
-				if(id == "") {
-					alert("아이디를 입력하세요!!");
-					return;
-				}
-				
-				if(password == "") {
-					alert("비밀번호를 입력하세요");
-					return;
-				}
-				
-				if(password != passwordConfirm) {
-					alert("비밀번호가 일치하지 않습니다");
-					return;
-				}
-				
-				
-				// 입력된 데이터를 회원 가입 api 로 가입을 진행한다. 
-				$.ajax({
-					type:"post",
-					url:"/user/signup",
-					data:{"loginId":id, "password":password, "name":name, "email":email},
-					success:function(data) {
-						if(data.result == "success") {
-							location.href = "/user/signin/view";
-						} else {
-							alert("아이디/ 비밀번호를 확인하세요");
-						}
-						
-					},
-					error:function() {
-						
-						alert("로그인 에러!!");
+				alert("아이디를 입력하세요");
+				return ;
+			}
+			
+			if(password == "") {
+				alert("비밀번호를 입력하세요");
+				return;
+			}
+			
+			$.ajax({
+				type:"post",
+				url:"/user/signin",
+				data:{"loginId":loginId, "password":password},
+				success:function(data) {
+					
+					if(data.result == "success") {
+						location.href = "/post/timeline/view";
+					} else {
+						alert("아이디/비밀번호를 확인하세요!!");
 					}
 					
-				});
-				
-				
-				
+				},
+				error:function() {
+					alert("로그인 에러");
+				}
 			});
 			
 			
+			
 		});
-	
-	
-	</script>
-	
-	
+		
+		
+	});
+
+</script>
 
 </body>
 </html>

@@ -1,12 +1,22 @@
 package com.yoojung0318.Dailygram.user.model;
 
+import java.util.Date;
+
 public class User {
 
+	private int id;
 	private String loginId;
 	private String password;
 	private String name;
 	private String email;
-	
+	private Date creteadAt;
+	private Date updatedAt;
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getLoginId() {
 		return loginId;
 	}
@@ -30,5 +40,17 @@ public class User {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public Date getCreteadAt() {
+		return creteadAt;
+	}
+	public void setCreteadAt(Date creteadAt) {
+		this.creteadAt = creteadAt;
+	}
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
 	}
 }
