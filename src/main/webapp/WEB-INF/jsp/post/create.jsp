@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>타임라인</title>
+<title>게시글 작성</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -17,21 +17,9 @@
 <body>
 	<div id="wrap">
 		<c:import url="/WEB-INF/jsp/include/header.jsp" />
-		<section class="d-flex justify-content-center bg-info" >
-			<div class="bg-success col-4">
-				<textarea rows="5" class="form-control mt-2" id="contentInput"></textarea>
-				<div class ="d-flex justify-content-between" >
-					<input type="file" class="mt-2">
-					<button type="button" class="btn btn-info">업로드</button>
-				</div>	
-				<div class="bg-white  border rounded posting">
-				
-					<input type="text" class="form-control col-4" id="name">
-					<input type="text" class="form-control col-12" id="picture">
-				
-				</div>
-			</div>	
-		</section>
+		<session>
+			
+		</session>
 		<c:import url="/WEB-INF/jsp/include/footer.jsp" />	
 	</div>
 </body>
