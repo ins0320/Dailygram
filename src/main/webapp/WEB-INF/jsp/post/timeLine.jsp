@@ -17,17 +17,32 @@
 <body>
 	<div id="wrap">
 		<c:import url="/WEB-INF/jsp/include/header.jsp" />
-		<section class="d-flex justify-content-center bg-info" >
-			<div class="bg-success col-4">
+		<section class="d-flex justify-content-center " >
+			<div class=" col-4">
 				<textarea rows="5" class="form-control mt-2" id="contentInput"></textarea>
 				<div class ="d-flex justify-content-between" >
 					<input type="file" class="mt-2">
 					<button type="button" class="btn btn-info">업로드</button>
 				</div>	
-				<div class="bg-white  border rounded posting">
+				<div class="bg-white  border rounded posting mt-3">
 				
-					<input type="text" class="form-control col-4" id="name">
-					<input type="text" class="form-control col-12" id="picture">
+					<div class="bg-white">닉네임</div>
+					<input type="text" class="form-control col-12  picture">
+				<div class="d-flex align-items-center mt-3">	
+					<button type="button" class="btn btn-danger col-2">하트</button>
+					<div>좋아요 56개</div>
+				</div>
+				<div class="d-flex align-items-center mt-3">
+					<div clas--"bg-white">닉네임</div>
+					<input type="text" class="form-control col-9 postWrite">
+				</div>
+				<div class="bg-white  border rounded mt-3">
+					댓글
+				</div>
+				<div class="d-flex justify-content-between">
+					<input type="text" class="form-control col-10 commentWrite" placeholder="댓글을 입력하세요">
+					<button type="button" class="btn btn-info col-2">게시</button>
+				</div>
 				
 				</div>
 			</div>	
