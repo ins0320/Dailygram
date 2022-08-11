@@ -18,8 +18,8 @@
 	<div id="wrap">
 		<c:import url="/WEB-INF/jsp/include/header.jsp" />
 		<section class="content d-flex justify-content-center">
-			<div class="col-4 ">
-				<img src="https://images.pexels.com/photos/1267291/pexels-photo-1267291.jpeg" width="450">
+			<div class="col-4">
+				<img src="https://images.pexels.com/photos/1267291/pexels-photo-1267291.jpeg" class="mainImg" width="450">
 			</div>
 			<div>
 				<div class="login-box d-flex justify-content-center align-items-start bg-white  border rounded">		
@@ -71,7 +71,7 @@
 				success:function(data) {
 					
 					if(data.result == "success") {
-						location.href = "/post/timeline/view";
+						location.href = "/post/timeLine/view";
 					} else {
 						alert("아이디/비밀번호를 확인하세요!!");
 					}

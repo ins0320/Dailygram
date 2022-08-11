@@ -17,17 +17,19 @@ logo{
 	font-weight:bold;
 	font-size:60px;
 }
-.img{
-	width:400px;
-	
-}
+
 
 section{
 	width:1200px;
 	height:700px;
 }
+.mainImg{
+	width:400px;
+	height:500px;
+}
 .login-box {
 	width:400px;
+	height:500px;
 
 }
 
@@ -35,18 +37,14 @@ section{
 	width:400px;
 	height:500px;
 }
-img{
-	width: 350px;
-	height:550px;
-}
-.posting{
-	
-	height:500px;
-}
+
 .picture{
 	
 	height:250px;
 }	
+.likeImg{
+	font-size:20px;
+}
 
 footer{
 	width:1200px;
