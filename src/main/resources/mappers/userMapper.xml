@@ -57,4 +57,21 @@
  		
  	
  	</select>
+ 	
+ 	<select id="selectUserByID" parameterType="int"
+ 	resultType="com.yoojung0318.Dailygram.user.model.User">
+ 	SELECT 
+ 			`id`
+ 			, `loginId`
+			, `password`
+			, `name`
+			, `email`
+			, `createdAt`
+			, `updatedAt`
+ 		FROM 
+ 			`daily_user`
+ 		WHERE
+ 			`id` = #{id}	
+ 	
+ 	</select>
 </mapper>

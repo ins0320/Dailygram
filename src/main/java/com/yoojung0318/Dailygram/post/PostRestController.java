@@ -29,9 +29,9 @@ public class PostRestController {
 		
 		HttpSession session = request.getSession();
 		
-		int userid = (Integer)session.getAttribute("userid");
+		int userid = (Integer)session.getAttribute("userId");
 		
-		int count = postBO.addPost(userid, content, imagePath);
+		int count = postBO.addPost(userid, content);
 		
 		Map<String, String> result = new HashMap<>();
 		if(count == 1) {

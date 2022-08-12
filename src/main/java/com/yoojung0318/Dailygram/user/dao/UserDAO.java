@@ -22,5 +22,7 @@ public interface UserDAO {
 			@Param("loginId") String loginId
 			, @Param("password") String password);
 	
+	// id로 사용자 정보 조회 기능
+	public User selectUserByID(@Param("id") int id);
 	
 }

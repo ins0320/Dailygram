@@ -7,7 +7,7 @@
  		INSERT INTO
  					`daily_post`
  		(
- 			`userIid`
+ 			`userid`
  			, `content`
  			, `imagePath`
  			, `createdAt`
@@ -15,7 +15,7 @@
  		)			
  		VALUES
  		(
- 			#{userIid}
+ 			#{userid}
  			, #{content}
  			, #{imagePath}
  			, now()
@@ -25,5 +25,22 @@
  	
  	</insert>
  
+ 	<select id="selectPostList" parameterType="int"
+	 resultType="com.yoojung0318.Dailygram.post.model.Post">
+	 	
+	 	SELECT
+	 		`id`
+	 		,`userid`
+	 		, `content`
+	 		, `imagePath`
+	 		, `createdAt`
+	 		, `updatedAt`
+	 	FROM
+	 		`daily_post`
+
+	 	ORDER BY
+	 		`id` DESC	
+	 
+	 </select>
  
  </mapper>

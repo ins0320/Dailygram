@@ -10,6 +10,7 @@ public class Post {
 	private String imagePath;
 	private Date updatedAt;
 	private Date createdAt;
+	
 	public int getId() {
 		return id;
 	}
