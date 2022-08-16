@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.yoojung0318.Dailygram.post.BO.PostBO;
 
@@ -24,14 +25,14 @@ public class PostRestController {
 	@PostMapping("/post/create")
 	public Map<String, String> createPost (
 			@RequestParam("content") String content
-			,@RequestParam("imagePath") String imagePath
+			,@RequestParam(value="file", required=false) MultipartFile  file// file의 타입, 필수 요소 아님을 나타냄(value="", required=false)
 			,HttpServletRequest request ){
 		
 		HttpSession session = request.getSession();
 		
-		int userid = (Integer)session.getAttribute("userId");
+		int userid = (Integer)session.getAttribute("userid");
 		
-		int count = postBO.addPost(userid, content);
+		int count = postBO.addPost(userid, content,file);
 		
 		Map<String, String> result = new HashMap<>();
 		if(count == 1) {

@@ -19,22 +19,23 @@
 	<div id="wrap">
 		<c:import url="/WEB-INF/jsp/include/header.jsp" />
 		<hr>
-		<session class="d-flex justify-content-center " >
+		<section class="d-flex justify-content-center " >
 			<!-- timeLine -->
 			<div class="col-6">
 				<!-- 글 입력상자 -->
 				<div class=" input-box border rounded">
 					<textarea rows="3" class="form-control border-0" id="content" placeholder="내용을 입력하세요"></textarea> <!-- border-0: 테두리 굴기 -->
 					<div class ="d-flex justify-content-between" >
-						<input type="file" class="mt-2" id="imagePath">
+						<input type="file" class="mt-2" id="fileInput">
 						<button type="button" class="btn btn-info" id="uploadBtn">업로드</button>
 					</div>	
 				</div>	
 				<!-- /글 입력 상자 -->
 				
 				<!-- 피드들 -->	
-				<div class="bg-white border rounded mt-3">
 					<c:forEach var="postDetail" items="${postList}">
+						<div class="bg-white border rounded mt-3">
+					
 						<!-- 타이틀 -->
 						<div class=" d-flex justify-content-between p-2">
 							<div>${postDetail.user.loginId }</div>
@@ -44,7 +45,7 @@
 						
 						<!-- 이미지 -->
 						<div>
-							<img class="col-12" src="https://cdn.pixabay.com/photo/2017/11/14/13/06/kitty-2948404_960_720.jpg">
+							<img class="w-100" src="${postDetail.post.imagePath}">
 						</div>
 						<!-- /이미지 -->
 						
@@ -86,7 +87,7 @@
 					<!-- /피드들 -->
 				</c:forEach>	
 			</div>	
-		</session>
+		</section>
 		<c:import url="/WEB-INF/jsp/include/footer.jsp" />	
 	</div>
 	
@@ -103,11 +104,20 @@
 				return;
 			}
 			
+			//파일을 포함한 파라미터 구성하기
+			var formData = new FormData();
+			formData.append("title", title);
+			formData.append("content", content);
+			formData.append("file", $("#fileInput")[0].files[0]);
+			
 		//포스팅 ajax	
 		$.ajax({
 			type: "post", 
 			url: "/post/create",
-			data: {"content" : content, "imagePath" : imagePath},
+			data:formData,
+			enctype:"multipart/form-data", //파일업로드 필수 옵션
+			processData:false,			   //파일업로드 필수 옵션
+			contentType:false,			  //파일업로드 필수 옵션
 			success:function(data){
 				if(data.result == "success"){
 					location.reload();

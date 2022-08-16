@@ -11,7 +11,7 @@ import com.yoojung0318.Dailygram.post.model.Post;
 public interface PostDAO {
 
 	public int insertPost(
-			@Param("userId") int userid
+			@Param("userid") int userid
 			,@Param("content") String content
 			,@Param("imagePath")String imagePath);
 	

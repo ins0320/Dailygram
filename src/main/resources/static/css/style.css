@@ -1,9 +1,7 @@
 @charset "UTF-8";
 
 #wrap{
-	
 	width:1200px;
-	height:800px;
 	margin:auto;
 }
 
@@ -21,7 +19,7 @@ logo{
 
 section{
 	width:1200px;
-	height:700px;
+	
 }
 .mainImg{
 	width:400px;
