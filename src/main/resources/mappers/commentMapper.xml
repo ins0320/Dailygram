@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+ 
+ <mapper namespace="com.yoojung0318.Dailygram.post.comment.dao.CommentDAO">
+ 
+  <insert id="insertComment" parameterType="map">
+  	INSERT INTO
+  				`comment`
+  	(
+  		`id`
+  		,`userId`
+  		,`postId`
+  		,`commment`
+  		,`createdAt`
+  		,`updatedAt`
+  	)	
+  	
+  	VALUES
+  	( 	
+  		#{userId}
+  		,#{postId}
+  		,#{comment}
+  		,now()
+  		,now()
+  	)		
+  
+  </insert>
+ </mapper>

@@ -6,16 +6,27 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
 public class FileManagerService {
 //BO의 한 부분
 	
 	//임의 변경 못하게 final , upload 뒤에 / 꼭 붙이기(뒤에 다른 경로가 더 들어옴), static 사용하여 객체생성없이 사용하능한 멤버변수로 만듬
-	public static String FILE_UPLOAD_PATH ="D:\\김유정\\springProject\\dailygram\\upload/";
-	
+	public final static String FILE_UPLOAD_PATH ="D:\\김유정\\springProject\\dailygram\\upload/";
+	//사용법
+	private static Logger logger = LoggerFactory.getLogger(FileManagerService.class);
 	//파일을 저장하고 접근가능한 경로 리턴하는 기능 [핵심]
 		public static String saveFile(int userid, MultipartFile file) { //userId도 같이 넘기게 만들기(파라미터 두개 같이 넘기게) , static 사용하여 객체생성없이 사용하능한 멤버변수로 만듬
+			
+			//정상적인 file인지 확인
+			if(file == null) {
+				logger.error("FileManagerService - saveFile : file 객체 null");
+				return null;
+				
+			}
 			//파일을 어디에 저장할지
 			
 			//"D:\\김유정\\springProject\\dailygram\\upload/3_34551451742/asdf.jpg	
@@ -48,6 +59,7 @@ public class FileManagerService {
 			} catch (IOException e) {
 				
 				// 오류 -> 파일처리 예외사황
+				logger.error("FileManagerService - saveFile : 파일 저장 실패");
 				e.printStackTrace();
 				return null;
 			}

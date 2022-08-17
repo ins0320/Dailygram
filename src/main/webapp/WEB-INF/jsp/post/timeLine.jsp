@@ -26,7 +26,8 @@
 				<div class=" input-box border rounded">
 					<textarea rows="3" class="form-control border-0" id="content" placeholder="내용을 입력하세요"></textarea> <!-- border-0: 테두리 굴기 -->
 					<div class ="d-flex justify-content-between" >
-						<input type="file" class="mt-2" id="fileInput">
+						<a href="#" id="imageIcon" > <i class="bi bi-card-image"></i></a>
+						<input type="file" class="d-none" id="fileInput">
 						<button type="button" class="btn btn-info" id="uploadBtn">업로드</button>
 					</div>	
 				</div>	
@@ -51,7 +52,7 @@
 						
 						<!-- 좋아요 -->
 						<div class="d-flex align-items-center  p-2">	
-							<i class="bi bi-heart likeImg"></i>
+							<a href="#" class="like-btn"  data-post-id="${postDetail.post.id}"> <i class="bi bi-heart"></i></a>
 							<div class="ml-3">좋아요 56개</div>
 						</div>
 						<!--  /좋아요 -->
@@ -94,7 +95,21 @@
 	<script>
 	
 	$(document).ready(function(){
+		$(".like-btn").on("click", function(e){
+			e.preventDefault();
+			
+			//현재 클릭된 태그 객체를 얻어 와서 postId를 얻어 온다.
+			alert();
+		});
+		$("#imageIcon").on("click", function(e){
+			//fileInput을 클릭한 효과를 만들어야 한다.
+			//a태그의 자동이동 기능 상쇠
+			e.preventDefault();
+			$("#fileInput").click();
+		});
+		
 		$("#uploadBtn").on("click", function(){
+		
 			
 			let content = $("#content").val();
 			let imagePath = $("#imagePath").val();
@@ -104,13 +119,20 @@
 				return;
 			}
 			
+			//파일 유효성 검사
+			//$("#fileInput")[0].files[0]
+			if($("#fileInput")[0].files.length == 0){ // file배열의 길이 확인 ( 0이면 아무것도 안들어간것)
+				alert("이미지를 선택하세요");
+			} 
+			
+			
+		
 			//파일을 포함한 파라미터 구성하기
 			var formData = new FormData();
-			formData.append("title", title);
 			formData.append("content", content);
 			formData.append("file", $("#fileInput")[0].files[0]);
 			
-		//포스팅 ajax	
+		//업로드 ajax	,사용자가 입력한 content로 api를 호출해서 데이터를 입력한다.
 		$.ajax({
 			type: "post", 
 			url: "/post/create",
@@ -122,18 +144,22 @@
 				if(data.result == "success"){
 					location.reload();
 				}else{
-					alert("포스팅 실패");
+					alert("업로드 실패");
 				}
 			},
 			error:function(){
-				alert("포스팅 에러");
+				alert("업로드 에러");
 			}
 			
 		});	
 		
+		
+		
+		
 		//글 업로드
 		
 	});	
+		
 });
 	
 	</script>

@@ -36,6 +36,14 @@ section{
 	height:500px;
 }
 
+.bi-card-image{
+	font-size: 30px;
+	color: black;
+}
+.bi-heart{
+	font-size: 30px;
+	color: black;
+}
 .picture{
 	
 	height:250px;

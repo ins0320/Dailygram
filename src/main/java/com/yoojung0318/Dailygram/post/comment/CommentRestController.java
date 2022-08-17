@@ -1,4 +1,4 @@
-package com.yoojung0318.Dailygram.post;
+package com.yoojung0318.Dailygram.post.comment;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,30 +10,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.yoojung0318.Dailygram.post.BO.PostBO;
+import com.yoojung0318.Dailygram.post.comment.bo.CommentBO;
 
-@RestController
-public class PostRestController {
+@RestController //controller가 필요에 의해서 bo를 호출하는 것, 해당하는 주소로 접속하면 기능을 수행하도록 연결
+public class CommentRestController {
 
-
-	@Autowired 
-	PostBO postBO;
+	@Autowired
+	private CommentBO commentBO;
 	
-	//피드 입력
-	@PostMapping("/post/create")
-	public Map<String, String> createPost (
-			@RequestParam("content") String content
-			,@RequestParam(value="file", required=false) MultipartFile  file// file의 타입, 필수 요소 아님을 나타냄(value="", required=false)
-			,HttpServletRequest request ){
-		
+	@PostMapping("/post/comment/create")
+	public Map<String, String> createCommnet(
+			@RequestParam("postId") int postId
+			, @RequestParam("content") String content
+			, HttpServletRequest request
+			){
 		HttpSession session = request.getSession();
-		
 		int userId = (Integer)session.getAttribute("userId");
 		
-		int count = postBO.addPost(userId, content,file);
-		
+		int count = commentBO. addComment(postId, userId, content);
+
 		Map<String, String> result = new HashMap<>();
 		if(count == 1) {
 			result.put("result", "success");
@@ -43,4 +39,5 @@ public class PostRestController {
 		
 		return result;
 	}
+	
 }

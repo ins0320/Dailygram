@@ -16,7 +16,7 @@ import com.yoojung0318.Dailygram.user.model.User;
 
 @Service
 public class PostBO {
-
+//저장,접근경로 DAO 전달
 	@Autowired
 	private PostDAO postDAO;
 	
@@ -25,10 +25,15 @@ public class PostBO {
 	
 	public int addPost(int userid, String content, MultipartFile file) {
 		
-		//파일을 저장한다.
+		//파일을 저장하고, 파일 접근 경로를 DAO로 전달
 		//해당 파일을 외부에서 접근할 수 있는 경로를 만들어서 dao로 전달한다.(DB에 저장하기 위해)
 		String imagePath = FileManagerService.saveFile(userid, file); //외부에서 접근가능한 경로
-				
+			
+		//파일 저장이 실패한 경우
+		if(imagePath == null) {
+			
+			return -1; // restcontroller에 return 값이 -1로 전달되어, error로 처리됨
+		}
 		return postDAO.insertPost(userid, content, imagePath);
 		
 	}
