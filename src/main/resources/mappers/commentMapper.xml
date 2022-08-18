@@ -6,12 +6,12 @@
  
   <insert id="insertComment" parameterType="map">
   	INSERT INTO
-  				`comment`
+  				`daily_comment`
   	(
-  		`id`
-  		,`userId`
+  	
+  		`userId`
   		,`postId`
-  		,`commment`
+  		,`comment`
   		,`createdAt`
   		,`updatedAt`
   	)	
@@ -20,10 +20,29 @@
   	( 	
   		#{userId}
   		,#{postId}
-  		,#{comment}
+  		,#{content}
   		,now()
   		,now()
   	)		
   
   </insert>
+  
+  <select id="selectComment" parameterType="map"
+  resultType="com.yoojung0318.Dailygram.">
+  
+  	SELECT  
+  				`userId`,
+  				`postId`,
+  				`comment`
+  			
+  	FROM			
+  				`daily_comment`
+  	WHERE
+  			`userId` = #{userId}
+	AND		`postId` = #{postId} 		
+  				
+  				
+  
+  </select>
+  
  </mapper>

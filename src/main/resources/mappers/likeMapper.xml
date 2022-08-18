@@ -10,8 +10,8 @@
   	INSERT INTO
   				`daily_like`
   	(
-  		`id`
-  		,`userId`
+  		
+  		`userId`
   		,`postId`
   		,`createdAt`
   	)	
@@ -23,5 +23,17 @@
   		,now()
   	)		
   </insert>
+  
+  <select id="selectcountLike" parameterType="int"
+  resultType="int">
+  	SELECT	 			
+  			count(*)																	
+   	FROM 
+   			`daily_like`
+   			
+	WHERE
+			`postId` = #{postId} 	
+  
+  </select>
   
  </mapper>

@@ -14,4 +14,8 @@ private CommentDAO commentDAO;
 	public int addComment(int postId,int userId, String content ) {
 		return commentDAO.insertComment(postId, userId, content);
 	}
+	
+	public List<> searchComment(int postId, int userId) {
+		return commentDAO.selectComment(postId, userId);
+	}
 }

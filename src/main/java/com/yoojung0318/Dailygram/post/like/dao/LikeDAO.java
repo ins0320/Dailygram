@@ -8,6 +8,9 @@ public interface LikeDAO {
 
 	public int insertLike(
 			@Param("postId") int postId
-			,@Param("userId") int userId
-			);
+			,@Param("userId") int userId);
+	
+	public int selectcountLike(
+			@Param("postId") int postId);
+	
 }

@@ -53,7 +53,7 @@
 						<!-- 좋아요 -->
 						<div class="d-flex align-items-center  p-2">	
 							<a href="#" class="like-btn"  data-post-id="${postDetail.post.id}"> <i class="bi bi-heart"></i></a>
-							<div class="ml-3">좋아요 56개</div>
+							<div class="ml-2">좋아요 ${postDetail.like }</div>
 						</div>
 						<!--  /좋아요 -->
 						
@@ -72,15 +72,15 @@
 						
 						<!-- 댓들 리스트 -->
 						<div class="mt-2 ml-2 rounded">
-							<div> <b>닉네임</b> 고양이 너무 귀여워요</div>
+							<div> <b>닉네임</b> 강아지 너무 귀여워요</div>
 							<div> <b>닉네임2</b> 릴스에서 봤어요 </div>
 						</div>
 						<!-- /댓글 리스트 -->
 						
 						<!-- 댓글 입력 -->
 						<div class="d-flex justify-content-between mt-3 rounded">
-							<input type="text" class="form-control col-10" placeholder="댓글을 입력하세요">
-							<button type="button" class="btn btn-info col-2">게시</button>
+							<input type="text" class="form-control col-10" placeholder="댓글을 입력하세요" id="commentInput${postDetail.post.id }">
+							<button data-post-id="${postDetail.post.id }" type="button" class="btn btn-info col-2 comment-btn">게시</button>
 						</div>
 						<!-- /댓글 입력 -->
 					
@@ -95,12 +95,69 @@
 	<script>
 	
 	$(document).ready(function(){
+		
+		$(".comment-btn").on("click",function(){
+			
+			//이벤트가 일어난 버튼에서 postId를 얻어 온다.
+			let postId = $(this).data("post-id")
+			
+			//작성한 댓글 가져오기
+			//#commentInput5
+			let content = $("#commentInput" + postId).val();
+				
+			$.ajax({
+				type:"post",
+				url:"/post/comment/create",
+				data:{"postId":postId, "content":content},
+				success:function(data){
+					if(data.result == "success"){
+						location.reload();
+					}else{
+						alert("댓글작성 실패");
+					}
+				},
+				error:function(){
+					alert("댓글작성 에러");
+				}
+				
+		
+				
+			});
+			alert(content);	
+			
+		});
 		$(".like-btn").on("click", function(e){
 			e.preventDefault();
 			
 			//현재 클릭된 태그 객체를 얻어 와서 postId를 얻어 온다.
-			alert();
+			//태그에 특정한 속성을 가져와 사용하고 싶을 때
+			//data-
+			//data-post-id="10" 
+			
+			let postId = $(this).data("post-id");
+			
+			
+			$.ajax({
+				type:"get",
+				url:"/post/like",
+				data:{"postId":postId},
+				success:function(data){
+					if(data.result == "success"){
+						location.reload();
+					}else{
+						alert("좋아요 실패");
+					}
+				},
+				error:function(){
+					alert("좋아요 에러");
+				}
+				
+			});
+				
+			alert(postId);
 		});
+		
+		
 		$("#imageIcon").on("click", function(e){
 			//fileInput을 클릭한 효과를 만들어야 한다.
 			//a태그의 자동이동 기능 상쇠
