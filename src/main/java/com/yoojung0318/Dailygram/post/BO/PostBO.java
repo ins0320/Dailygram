@@ -9,6 +9,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.yoojung0318.Dailygram.common.FileManagerService;
 import com.yoojung0318.Dailygram.post.DAO.PostDAO;
+import com.yoojung0318.Dailygram.post.comment.bo.CommentBO;
+import com.yoojung0318.Dailygram.post.comment.model.CommentDetail;
 import com.yoojung0318.Dailygram.post.like.bo.LikeBO;
 import com.yoojung0318.Dailygram.post.model.Post;
 import com.yoojung0318.Dailygram.post.model.PostDetail;
@@ -27,7 +29,14 @@ public class PostBO {
 	@Autowired
 	private LikeBO likeBO;
 	
+	@Autowired
+	private CommentBO commentBO;
+	
+
 	public int addPost(int userId, String content, MultipartFile file) {
+
+
+	
 		
 		//파일을 저장하고, 파일 접근 경로를 DAO로 전달
 		//해당 파일을 외부에서 접근할 수 있는 경로를 만들어서 dao로 전달한다.(DB에 저장하기 위해)
@@ -43,12 +52,14 @@ public class PostBO {
 	}
 	
 	//userId가 일치하는 메모 리스트 조회
-	public List<PostDetail> getPostList(){
+	public List<PostDetail> getPostList() {
+		
 		List<PostDetail> postDetailList = new ArrayList<>();		//post안에 있는 userid별로 조회
+		
 		List<Post> postList = postDAO.selectPostList();	
 		
 		for(Post post : postList) {
-			
+
 			int userId = post.getUserid();
 			int postId = post.getId();
 			//user 테이블 조회
@@ -57,18 +68,47 @@ public class PostBO {
 			
 			//좋아요 개수를 가져와서 조회
 			int like = likeBO.countLike(postId);
+			int likeCount = likeBO.countLike(postId);
 			
+			List<CommentDetail> commentList = commentBO.getCommentListByPostId(postId);
 			// 게시글과 사용자 정보를 합치는 과정
 			PostDetail postDetail = new PostDetail();
 			postDetail.setPost(post);
 			postDetail.setUser(user);
-			//좋아요 개수
-			postDetail.setLike(like);
+			postDetail.setLikeCount(likeCount);
+			postDetail.setCommentList(commentList);
 			
 			postDetailList.add(postDetail);
-		
+
+			
+			
 		}
-		
 		return postDetailList;
 	}
+	
+		public int deletePost(int postId,int userId) {
+			Post post = postDAO.selectPost(postId);	
+			int count = postDAO.deletePost(postId, userId);
+			
+			if(count == 1) {
+				
+				//파일삭제
+				//파일경로 알아오기
+				
+						
+				FileManagerService.removeFile(post.getImagePath());
+				
+				//댓글삭제
+				commentBO.deleteComment(postId);
+				
+				//좋아요 삭제
+				likeBO.deleteLikeByPostId(postId);
+				
+			}
+			return count;
+			
+			
+		}
+		
+		
 }

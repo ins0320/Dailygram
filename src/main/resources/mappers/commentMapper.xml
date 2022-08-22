@@ -26,9 +26,8 @@
   	)		
   
   </insert>
-  
   <select id="selectComment" parameterType="map"
-  resultType="com.yoojung0318.Dailygram.">
+  resultType="com.yoojung0318.Dailygram.post.comment.dao.CommentDAO">
   
   	SELECT  
   				`userId`,
@@ -45,4 +44,30 @@
   
   </select>
   
+
+  <select id="selectCommentListByPostId" parameterType="int"
+	resultType="com.yoojung0318.Dailygram.post.comment.model.Comment">
+		SELECT 
+			`id`
+			, `postId`
+			, `userId`
+			, `comment`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`daily_comment`
+		WHERE
+			`postId` = #{postId}
+	
+	</select>
+	<delete id="deleteComment" parameterType="int">
+	
+			DELETE 		
+					`postId`
+			FROM
+					`daily_like`
+			WHERE
+					`postId` = #{postId}				
+	</delete>
+
  </mapper>

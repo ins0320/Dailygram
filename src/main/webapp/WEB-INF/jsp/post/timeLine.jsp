@@ -40,9 +40,14 @@
 						<!-- 타이틀 -->
 						<div class=" d-flex justify-content-between p-2">
 							<div>${postDetail.user.loginId }</div>
-							<i class="bi bi-three-dots"></i> 
+							
+							<%--로그인한 사용자 userId가 해당 게시글의 사용자 suerId --%>
+							<c:if test= "${userId eq postDetail.user.id}">
+								<a href="#" data-toggle="modal" data-target="#exampleModalCenter" class="more-btn" data-post-id="${postDetail.post.id}"><i class="bi bi-three-dots-vertical"></i></a>
+							</c:if>
 						</div>
 						<!-- /타이들 -->
+						
 						
 						<!-- 이미지 -->
 						<div>
@@ -52,8 +57,18 @@
 						
 						<!-- 좋아요 -->
 						<div class="d-flex align-items-center  p-2">	
-							<a href="#" class="like-btn"  data-post-id="${postDetail.post.id}"> <i class="bi bi-heart"></i></a>
-							<div class="ml-2">좋아요 ${postDetail.like }</div>
+						<c:choose>
+							<c:when test="{postDetail.like}">
+								<a href="#" class="unlike-btn decoration-none"  data-post-id="${postDetail.post.id}">
+									<span class="heart-size text-danger"><i class="bi bi-heart-fill"></i></span>
+								</a>
+							</c:when>
+							<c:otherwise>	
+								<a href="#" class="like-btn"  data-post-id="${postDetail.post.id}"> <i class="bi bi-heart"></i></a>
+							</c:otherwise>
+							</c:choose>	
+							<div class="ml-2">좋아요 ${postDetail.likeCount }개</div>
+							
 						</div>
 						<!--  /좋아요 -->
 						
@@ -72,8 +87,9 @@
 						
 						<!-- 댓들 리스트 -->
 						<div class="mt-2 ml-2 rounded">
-							<div> <b>닉네임</b> 강아지 너무 귀여워요</div>
-							<div> <b>닉네임2</b> 릴스에서 봤어요 </div>
+						<c:forEach var="commentDetail" items="${postDetail.commentList}">
+							<div> <b>${commentDetail.user.name}</b> ${commentDetail.comment.comment}</div>
+						</c:forEach>	
 						</div>
 						<!-- /댓글 리스트 -->
 						
@@ -92,9 +108,84 @@
 		<c:import url="/WEB-INF/jsp/include/footer.jsp" />	
 	</div>
 	
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	   
+	      <div class="modal-body text-center">
+	       <a href="#" id="deleteBtn" >삭제하기</a>
+	      </div>
+	      
+	    </div>
+	  </div>
+	</div>
+	
+	<div class=""></div>
 	<script>
 	
 	$(document).ready(function(){
+		
+		$(".more-btn").on("click", function(){
+			//이벤트가 발생한 버튼에서 post-id를 얻어 온다.
+			let postId = $(this).data("post-id");
+			
+			//삭제하기 버튼에 해당 post-id를 저장한다. (data-post-id 속성에 값을 넣는다)
+			//<a href="#" id="deleteBtn" data-post-id="8">삭제하기</a>
+			
+			$("#deleteBtn").data("post-id", postId)
+		});
+		
+		$("#deleteBtn").on("click", function(){
+			
+			//postId, click된 그 이벤트 하나 가져오기
+			let postId = $(this).data("post-id");
+			$.ajax({
+				type:"get",
+				url:"/post/delete",
+				data:{"postId":postId},
+				success:function(data){
+					if(data.result == "success"){
+						location.reload();
+					}else{
+						alert("삭제 실패");
+					}	
+					
+					
+				},
+				error:function(){
+					alert("삭제 에러");
+				}
+				
+			})
+			
+		});
+		
+		$(".unlike-btn").on("click", function(){
+			e.preventDefault();
+			//data-post-id
+			let postId = $(this).data("post-id");
+			
+			$.ajax({
+				type:"get",
+				url:"/post/unlike",
+				data:{"postId":postId},
+				success:function(data){
+					if(data.result == "success"){
+						location.reload();
+					}else{
+						alert("좋아요 취소 실패");
+					}	
+					
+					
+				},
+				error:function(){
+					alert("좋아요 취소 에러");
+				}
+				
+				
+			});
+		});
 		
 		$(".comment-btn").on("click",function(){
 			

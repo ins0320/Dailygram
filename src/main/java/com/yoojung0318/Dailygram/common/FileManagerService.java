@@ -74,4 +74,51 @@ public class FileManagerService {
 			
 		
 		}
+	public static boolean removeFile(String filePath) { // /images/3_1241241/test.png
+			
+			if(filePath == null) {
+				
+				return false;
+			}
+			
+			String realFilePath = FILE_UPLOAD_PATH + filePath.replace("/images/", "");
+			
+			Path path = Paths.get(realFilePath);
+			
+			// 파일이 있는지 
+			if(Files.exists(path)) {
+				try {
+					Files.delete(path);
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+					
+					return false;
+				}
+			}
+			
+		//	D//D:\\김유정\\springProject\\memo\\upload/3_34551451742/asdf.jpg
+			
+		//  D//D:\\김유정\\springProject\\memo\\upload/3_34551451742
+			
+			path = path.getParent();
+			
+			// 디렉토리가 존재하는지 확인
+			if(Files.exists(path)) {
+				try {
+					Files.delete(path);
+				} catch (IOException e) {
+					
+					e.printStackTrace();
+					return false;
+				}
+			}
+			
+			
+			return true;
+			
+			
+			
+			
+		}
 }
