@@ -6,7 +6,7 @@
  
   <insert id="insertComment" parameterType="map">
   	INSERT INTO
-  				`comment`
+  				`daily_comment`
   	(
   		`id`
   		,`userId`
@@ -26,4 +26,20 @@
   	)		
   
   </insert>
+  
+  <select id="selectCommentListByPostId" parameterType="int"
+	resultType="com.yoojung0318.Dailygram.post.comment.model.Comment">
+		SELECT 
+			`id`
+			, `postId`
+			, `userId`
+			, `commment`
+			, `createdAt`
+			, `updatedAt`
+		FROM
+			`daily_comment`
+		WHERE
+			`postId` = #{postId}
+	
+	</select>
  </mapper>

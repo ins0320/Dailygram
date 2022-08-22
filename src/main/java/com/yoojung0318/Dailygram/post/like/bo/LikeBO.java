@@ -15,4 +15,8 @@ public class LikeBO {
 		return likeDAO.insertLike(postId, userId) ;
 		
 	}
+	// postId 로 좋아요 개수 조회
+		public int countLike(int postId) {
+			return likeDAO.selectCountLike(postId);
+		}
 }

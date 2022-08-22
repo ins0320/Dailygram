@@ -24,4 +24,14 @@
   	)		
   </insert>
   
+	<select id="selectCountLike" parameterType="int" resultType="int">
+		SELECT 
+			count(1)
+		FROM
+			`daily_like`
+		WHERE
+			`postId` = #{postId}
+	
+	</select>
+  
  </mapper>
