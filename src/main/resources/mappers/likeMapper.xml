@@ -10,8 +10,8 @@
   	INSERT INTO
   				`daily_like`
   	(
-  		`id`
-  		,`userId`
+  		
+  		`userId`
   		,`postId`
   		,`createdAt`
   	)	
@@ -24,14 +24,38 @@
   	)		
   </insert>
   
-	<select id="selectCountLike" parameterType="int" resultType="int">
-		SELECT 
-			count(1)
-		FROM
-			`daily_like`
+
+  <select id="selectcountLike" parameterType="int"
+  resultType="int">
+  	SELECT	 			
+  			count(*)																	
+   	FROM 
+   			`daily_like`
+   			
+	WHERE
+			`postId` = #{postId} 	
+  
+  </select>
+
+	 <delete id="deletelike" parameterType="map">
+		DELETE 
+				`userId`
+				,`postId`
+		FROM	
+				`daily_like`
 		WHERE
-			`postId` = #{postId}
-	
-	</select>
+				`postId` = #{postId}
+		AND 	 `userId` = #{userId}				
+	</delete>
+
+	<delete id="deletecountLikeByPostId" parameterType="map">
+		DELETE 
+				`userId`
+				,`postId`
+		FROM	
+				`daily_like`
+		WHERE
+				`postId` = #{postId}	
+	</delete>
   
  </mapper>

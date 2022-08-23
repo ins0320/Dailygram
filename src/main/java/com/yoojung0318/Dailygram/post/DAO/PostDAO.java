@@ -11,10 +11,16 @@ import com.yoojung0318.Dailygram.post.model.Post;
 public interface PostDAO {
 
 	public int insertPost(
-			@Param("userid") int userid
+			@Param("userId") int userid
 			,@Param("content") String content
 			,@Param("imagePath")String imagePath);
 	
 	
 	public List<Post> selectPostList();
+	public Post selectPost(@Param("postId") int postId);
+	
+	public int deletePost(@Param("postId")int postId, @Param("userId")int userId);
+	
+	
+	
 }

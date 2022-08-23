@@ -6,7 +6,7 @@ public class Comment {
 	private int id;
 	private int postId;
 	private int userId;
-	private String content;
+	private String comment;
 	private Date createdAt;
 	private Date updatedAt;
 	
@@ -28,11 +28,12 @@ public class Comment {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	public String getContent() {
-		return content;
+	
+	public String getComment() {
+		return comment;
 	}
-	public void setContent(String content) {
-		this.content = content;
+	public void setComment(String comment) {
+		this.comment = comment;
 	}
 	public Date getCreatedAt() {
 		return createdAt;

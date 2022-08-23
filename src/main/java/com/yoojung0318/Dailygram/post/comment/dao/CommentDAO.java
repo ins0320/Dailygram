@@ -12,8 +12,15 @@ public interface CommentDAO {
 
 	public int insertComment(
 			@Param("postId") int postId
-			,@Param("userid")int userId
+			,@Param("userId")int userId
 			,@Param("content") String content);
 	
+
+	public int selectComment(
+			@Param("postId") int postId
+			,@Param("userId") int userId);
+
 	public List<Comment> selectCommentListByPostId(@Param("postId") int postId);
+
+	public int deleteComment( @Param("postId") int postId);
 }

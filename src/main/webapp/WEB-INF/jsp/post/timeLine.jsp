@@ -42,9 +42,18 @@
 						<!-- 타이틀 -->
 						<div class=" d-flex justify-content-between p-2">
 							<div>${postDetail.user.loginId }</div>
+<<<<<<< HEAD
 							<div><i class="bi bi-three-dots"></i></div>						
+=======
+							
+							<%--로그인한 사용자 userId가 해당 게시글의 사용자 suerId --%>
+							<c:if test= "${userId eq postDetail.user.id}">
+								<a href="#" data-toggle="modal" data-target="#exampleModalCenter" class="more-btn" data-post-id="${postDetail.post.id}"><i class="bi bi-three-dots-vertical"></i></a>
+							</c:if>
+>>>>>>> origin/develop
 						</div>
 						<!-- /타이들 -->
+						
 						
 						<!-- 이미지 -->
 						<div>
@@ -54,10 +63,25 @@
 						
 						<!-- 좋아요 -->
 						<div class="d-flex align-items-center  p-2">	
+<<<<<<< HEAD
 							<a href="#" class="like-btn"  data-post-id="${postDetail.post.id}"> 
 								<span class="heart-size"><i class="bi bi-heart"></i></span>
 							</a>	
 							<div class="ml-3"> 좋아요 ${postDetail.likeCount }</div>
+=======
+						<c:choose>
+							<c:when test="{postDetail.like}">
+								<a href="#" class="unlike-btn decoration-none"  data-post-id="${postDetail.post.id}">
+									<span class="heart-size text-danger"><i class="bi bi-heart-fill"></i></span>
+								</a>
+							</c:when>
+							<c:otherwise>	
+								<a href="#" class="like-btn"  data-post-id="${postDetail.post.id}"> <i class="bi bi-heart"></i></a>
+							</c:otherwise>
+							</c:choose>	
+							<div class="ml-2">좋아요 ${postDetail.likeCount }개</div>
+							
+>>>>>>> origin/develop
 						</div>
 						<!--  /좋아요 -->
 						
@@ -90,10 +114,29 @@
 								<!-- /댓글 입력 -->
 							
 							</div>
+<<<<<<< HEAD
 							<!-- /댓글 -->
 					</div>	
 					<!-- /피드 -->
 				</c:forEach>
+=======
+						<!-- 댓글 -->		
+						
+						<!-- 댓들 리스트 -->
+						<div class="mt-2 ml-2 rounded">
+						<c:forEach var="commentDetail" items="${postDetail.commentList}">
+							<div> <b>${commentDetail.user.name}</b> ${commentDetail.comment.comment}</div>
+						</c:forEach>	
+						</div>
+						<!-- /댓글 리스트 -->
+						
+						<!-- 댓글 입력 -->
+						<div class="d-flex justify-content-between mt-3 rounded">
+							<input type="text" class="form-control col-10" placeholder="댓글을 입력하세요" id="commentInput${postDetail.post.id }">
+							<button data-post-id="${postDetail.post.id }" type="button" class="btn btn-info col-2 comment-btn">게시</button>
+						</div>
+						<!-- /댓글 입력 -->
+>>>>>>> origin/develop
 					
 				</div>
 				<!-- /피드들 -->	
@@ -103,9 +146,24 @@
 		<c:import url="/WEB-INF/jsp/include/footer.jsp" />	
 	</div>
 	
+	<!-- Modal -->
+	<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered" role="document">
+	    <div class="modal-content">
+	   
+	      <div class="modal-body text-center">
+	       <a href="#" id="deleteBtn" >삭제하기</a>
+	      </div>
+	      
+	    </div>
+	  </div>
+	</div>
+	
+	<div class=""></div>
 	<script>
 
 	$(document).ready(function(){
+<<<<<<< HEAD
 	
 		$(".comment-btn").on("click", function() {
 					
@@ -135,17 +193,122 @@
 					
 				});
 		
-		$(".like-btn").on("click", function(e){
-			e.preventDefault();
+=======
+		
+		$(".more-btn").on("click", function(){
+			//이벤트가 발생한 버튼에서 post-id를 얻어 온다.
+			let postId = $(this).data("post-id");
 			
-			//현재 클릭된 태그 객체를 얻어 와서 postId를 얻어 온다.
-			// data-post-id="10"
+			//삭제하기 버튼에 해당 post-id를 저장한다. (data-post-id 속성에 값을 넣는다)
+			//<a href="#" id="deleteBtn" data-post-id="8">삭제하기</a>
+			
+			$("#deleteBtn").data("post-id", postId)
+		});
+		
+		$("#deleteBtn").on("click", function(){
+			
+			//postId, click된 그 이벤트 하나 가져오기
+			let postId = $(this).data("post-id");
+			$.ajax({
+				type:"get",
+				url:"/post/delete",
+				data:{"postId":postId},
+				success:function(data){
+					if(data.result == "success"){
+						location.reload();
+					}else{
+						alert("삭제 실패");
+					}	
+					
+					
+				},
+				error:function(){
+					alert("삭제 에러");
+				}
+				
+			})
+			
+		});
+		
+		$(".unlike-btn").on("click", function(){
+			e.preventDefault();
+			//data-post-id
 			let postId = $(this).data("post-id");
 			
 			$.ajax({
 				type:"get",
+				url:"/post/unlike",
+				data:{"postId":postId},
+				success:function(data){
+					if(data.result == "success"){
+						location.reload();
+					}else{
+						alert("좋아요 취소 실패");
+					}	
+					
+					
+				},
+				error:function(){
+					alert("좋아요 취소 에러");
+				}
+				
+				
+			});
+		});
+		
+		$(".comment-btn").on("click",function(){
+			
+			//이벤트가 일어난 버튼에서 postId를 얻어 온다.
+			let postId = $(this).data("post-id")
+			
+			//작성한 댓글 가져오기
+			//#commentInput5
+			let content = $("#commentInput" + postId).val();
+				
+			$.ajax({
+				type:"post",
+				url:"/post/comment/create",
+				data:{"postId":postId, "content":content},
+				success:function(data){
+					if(data.result == "success"){
+						location.reload();
+					}else{
+						alert("댓글작성 실패");
+					}
+				},
+				error:function(){
+					alert("댓글작성 에러");
+				}
+				
+		
+				
+			});
+			alert(content);	
+			
+		});
+>>>>>>> origin/develop
+		$(".like-btn").on("click", function(e){
+			e.preventDefault();
+			
+			//현재 클릭된 태그 객체를 얻어 와서 postId를 얻어 온다.
+<<<<<<< HEAD
+			// data-post-id="10"
+			let postId = $(this).data("post-id");
+			
+=======
+			//태그에 특정한 속성을 가져와 사용하고 싶을 때
+			//data-
+			//data-post-id="10" 
+			
+			let postId = $(this).data("post-id");
+			
+			
+>>>>>>> origin/develop
+			$.ajax({
+				type:"get",
 				url:"/post/like",
 				data:{"postId":postId},
+<<<<<<< HEAD
 				success:function(data) {
 					if(data.result == "success") {
 						location.reload();
@@ -160,6 +323,25 @@
 			});
 		});
 		
+=======
+				success:function(data){
+					if(data.result == "success"){
+						location.reload();
+					}else{
+						alert("좋아요 실패");
+					}
+				},
+				error:function(){
+					alert("좋아요 에러");
+				}
+				
+			});
+				
+			alert(postId);
+		});
+		
+		
+>>>>>>> origin/develop
 		$("#imageIcon").on("click", function(e){
 			//fileInput을 클릭한 효과를 만들어야 한다.
 			//a태그의 자동이동 기능 상쇠

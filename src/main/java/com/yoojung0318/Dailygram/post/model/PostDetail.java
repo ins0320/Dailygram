@@ -16,6 +16,7 @@ public class PostDetail {
 	// 댓글 리스트
 	private List<CommentDetail> commentList;
 	
+	
 	public List<CommentDetail> getCommentList() {
 		return commentList;
 	}

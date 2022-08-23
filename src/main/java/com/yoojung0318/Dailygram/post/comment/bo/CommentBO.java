@@ -25,6 +25,7 @@ public class CommentBO { // 전달받아서 결과 받아서 리턴함
 		return commentDAO.insertComment(postId, userId, content);
 	}
 	
+
 	// post id를 대상으로 해당하는 댓글 들을 조회 기능
 		public List<CommentDetail> getCommentListByPostId(int postId) {
 			
@@ -44,5 +45,10 @@ public class CommentBO { // 전달받아서 결과 받아서 리턴함
 				commentDetailList.add(commentDetail);	
 			}
 			return commentDetailList;
+		}
+		
+		//해당하는 postId의 모든댓글 삭제
+		public int deleteComment(int postId) {
+			return commentDAO.deleteComment(postId);
 		}
 }

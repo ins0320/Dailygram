@@ -8,10 +8,10 @@
   	INSERT INTO
   				`daily_comment`
   	(
-  		`id`
-  		,`userId`
+  	
+  		`userId`
   		,`postId`
-  		,`commment`
+  		,`comment`
   		,`createdAt`
   		,`updatedAt`
   	)	
@@ -20,20 +20,38 @@
   	( 	
   		#{userId}
   		,#{postId}
-  		,#{comment}
+  		,#{content}
   		,now()
   		,now()
   	)		
   
   </insert>
+  <select id="selectComment" parameterType="map"
+  resultType="com.yoojung0318.Dailygram.post.comment.dao.CommentDAO">
   
+  	SELECT  
+  				`userId`,
+  				`postId`,
+  				`comment`
+  			
+  	FROM			
+  				`daily_comment`
+  	WHERE
+  			`userId` = #{userId}
+	AND		`postId` = #{postId} 		
+  				
+  				
+  
+  </select>
+  
+
   <select id="selectCommentListByPostId" parameterType="int"
 	resultType="com.yoojung0318.Dailygram.post.comment.model.Comment">
 		SELECT 
 			`id`
 			, `postId`
 			, `userId`
-			, `commment`
+			, `comment`
 			, `createdAt`
 			, `updatedAt`
 		FROM
@@ -42,4 +60,14 @@
 			`postId` = #{postId}
 	
 	</select>
+	<delete id="deleteComment" parameterType="int">
+	
+			DELETE 		
+					`postId`
+			FROM
+					`daily_like`
+			WHERE
+					`postId` = #{postId}				
+	</delete>
+
  </mapper>
