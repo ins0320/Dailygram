@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +13,6 @@
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 	
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
 	<link rel="stylesheet" href="/static/css/style.css" type="text/css">
 </head>
 <body>
@@ -35,14 +34,13 @@
 				<!-- /글 입력 상자 -->
 				
 				<!-- 피드들 -->	
-				<div class="mt-4">
 					<c:forEach var="postDetail" items="${postList}">
 						<div class="bg-white border rounded mt-3">
 					
 						<!-- 타이틀 -->
 						<div class=" d-flex justify-content-between p-2">
 							<div>${postDetail.user.loginId }</div>
-							<div><i class="bi bi-three-dots"></i></div>						
+							<i class="bi bi-three-dots"></i> 
 						</div>
 						<!-- /타이들 -->
 						
@@ -54,16 +52,14 @@
 						
 						<!-- 좋아요 -->
 						<div class="d-flex align-items-center  p-2">	
-							<a href="#" class="like-btn"  data-post-id="${postDetail.post.id}"> 
-								<span class="heart-size"><i class="bi bi-heart"></i></span>
-							</a>	
-							<div class="ml-3"> 좋아요 ${postDetail.likeCount }</div>
+							<a href="#" class="like-btn"  data-post-id="${postDetail.post.id}"> <i class="bi bi-heart"></i></a>
+							<div class="ml-3">좋아요 56개</div>
 						</div>
 						<!--  /좋아요 -->
 						
 						<!-- 게시글 -->
 						<div class="d-flex align-items-center mt-3 ml-2">
-							<div><b>${postDetail.user.loginId }</b> </div>
+							<div><b>${postDetail.user.loginId }</b></div>
 							<div class="ml-3">${postDetail.post.content }</div>
 						</div>
 						<!-- /게시글 -->
@@ -71,95 +67,40 @@
 						<!-- 댓글 -->
 							<div class="p-2">
 								<div class="border-bottom small">댓글</div>
-							
-				
-						
-								<!-- 댓들 리스트 -->
-								<div class="mt-2 ml-2 rounded">
-									<c:forEach var="commentDetail" items="${postDetail.commentList }">
-										<div><b>${commentDetail.user.loginId }</b> ${commentDetail.comment.content } </div>
-									</c:forEach>
-								</div>
-								<!-- /댓글 리스트 -->
-								
-								<!-- 댓글 입력 -->
-								<div class="d-flex justify-content-between mt-3 rounded">
-									<input type="text" class="form-control col-10 border-0" placeholder="댓글을 입력하세요"  id="commentInput${postDetail.post.id }">
-									<button data-post-id="${postDetail.post.id }" type="button" class="btn btn-success ml-2 comment-btn">게시</button>
-								</div>
-								<!-- /댓글 입력 -->
-							
 							</div>
-							<!-- /댓글 -->
-					</div>	
-					<!-- /피드 -->
-				</c:forEach>
+						<!-- 댓글 -->		
+						
+						<!-- 댓들 리스트 -->
+						<div class="mt-2 ml-2 rounded">
+							<div> <b>닉네임</b> 고양이 너무 귀여워요</div>
+							<div> <b>닉네임2</b> 릴스에서 봤어요 </div>
+						</div>
+						<!-- /댓글 리스트 -->
+						
+						<!-- 댓글 입력 -->
+						<div class="d-flex justify-content-between mt-3 rounded">
+							<input type="text" class="form-control col-10" placeholder="댓글을 입력하세요">
+							<button type="button" class="btn btn-info col-2">게시</button>
+						</div>
+						<!-- /댓글 입력 -->
 					
-				</div>
-				<!-- /피드들 -->	
+					</div>
+					<!-- /피드들 -->
+				</c:forEach>	
 			</div>	
-			<!--  /timeLine -->
 		</section>
 		<c:import url="/WEB-INF/jsp/include/footer.jsp" />	
 	</div>
 	
 	<script>
-
-	$(document).ready(function(){
 	
-		$(".comment-btn").on("click", function() {
-					
-					// 이벤트가 일어난 버튼에서 postId를 얻어 온다.
-					let postId = $(this).data("post-id");
-					// 작성한 댓글 가져오기 
-					// #commentInput5
-					let content = $("#commentInput" + postId).val();
-					
-					$.ajax({
-						type:"post",
-						url:"/post/comment/create",
-						data:{"postId":postId, "content":content},
-						success:function(data){
-							if(data.result == "success") {
-								location.reload();
-							} else {
-								alert("댓글 작성 실패");
-							}
-							
-						},
-						error:function() {
-							alert("댓글 작성 에러");
-						}
-						
-					});
-					
-				});
-		
+	$(document).ready(function(){
 		$(".like-btn").on("click", function(e){
 			e.preventDefault();
 			
 			//현재 클릭된 태그 객체를 얻어 와서 postId를 얻어 온다.
-			// data-post-id="10"
-			let postId = $(this).data("post-id");
-			
-			$.ajax({
-				type:"get",
-				url:"/post/like",
-				data:{"postId":postId},
-				success:function(data) {
-					if(data.result == "success") {
-						location.reload();
-					} else {
-						alert("좋아요 실패");
-					}
-					
-				},
-				error:function() {
-					alert("좋아요 에러!");
-				}
-			});
+			alert();
 		});
-		
 		$("#imageIcon").on("click", function(e){
 			//fileInput을 클릭한 효과를 만들어야 한다.
 			//a태그의 자동이동 기능 상쇠
@@ -170,8 +111,8 @@
 		$("#uploadBtn").on("click", function(){
 		
 			
-			let content = $("#contentInput").val().trim();
-
+			let content = $("#content").val();
+			let imagePath = $("#imagePath").val();
 			
 			if(content == ""){
 				alert("내용을 입력하세요");
@@ -182,7 +123,6 @@
 			//$("#fileInput")[0].files[0]
 			if($("#fileInput")[0].files.length == 0){ // file배열의 길이 확인 ( 0이면 아무것도 안들어간것)
 				alert("이미지를 선택하세요");
-				return;
 			} 
 			
 			
