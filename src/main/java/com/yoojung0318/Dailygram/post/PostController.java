@@ -16,23 +16,22 @@ import com.yoojung0318.Dailygram.post.model.PostDetail;
 
 @Controller
 public class PostController {
-
 	@Autowired
 	private PostBO postBO;
 	
-	//메인화면
-	@GetMapping("/post/timeLine/view")
-	public String timeLineView(HttpServletRequest request, Model model){
+	@GetMapping("/post/timeline/view")
+	public String timelineView(Model model
+			, HttpServletRequest request) {
 		
+		HttpSession session = request.getSession();
+		int userId = (Integer)session.getAttribute("userId");
+		
+		
+		List<PostDetail> postDetailList = postBO.getPostList(userId);
+		model.addAttribute("postList", postDetailList);
+		// 데이터 조회해서 model 객체에 값을 저장한다. 
+		
+		return "post/timeline";
+	}
 
-		//데이터 조회해서 model 객체에 값을 저장한다			
-			List<PostDetail> postList = postBO.getPostList();
-			model.addAttribute("postList", postList);
-			
-			return "post/timeLine";
-		
-		}
-	
 }
-	
-	

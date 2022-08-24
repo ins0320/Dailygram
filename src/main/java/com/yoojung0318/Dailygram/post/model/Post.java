@@ -3,13 +3,14 @@ package com.yoojung0318.Dailygram.post.model;
 import java.util.Date;
 
 public class Post {
-
+	
 	private int id;
-	private int userid;
+	private int userId;
 	private String content;
 	private String imagePath;
-	private Date updatedAt;
 	private Date createdAt;
+	private Date updatedAt;
+	
 	
 	public int getId() {
 		return id;
@@ -17,11 +18,11 @@ public class Post {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getUserid() {
-		return userid;
+	public int getUserId() {
+		return userId;
 	}
-	public void setUserid(int userid) {
-		this.userid = userid;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 	public String getContent() {
 		return content;
@@ -35,18 +36,17 @@ public class Post {
 	public void setImagePath(String imagePath) {
 		this.imagePath = imagePath;
 	}
-	public Date getUpdatedAt() {
-		return updatedAt;
-	}
-	public void setUpdatedAt(Date updatedAt) {
-		this.updatedAt = updatedAt;
-	}
 	public Date getCreatedAt() {
 		return createdAt;
 	}
 	public void setCreatedAt(Date createdAt) {
 		this.createdAt = createdAt;
 	}
-
+	public Date getUpdatedAt() {
+		return updatedAt;
+	}
+	public void setUpdatedAt(Date updatedAt) {
+		this.updatedAt = updatedAt;
+	}
 
 }

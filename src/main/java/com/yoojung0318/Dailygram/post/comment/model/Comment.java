@@ -2,11 +2,12 @@ package com.yoojung0318.Dailygram.post.comment.model;
 
 import java.util.Date;
 
+
 public class Comment {
 	private int id;
 	private int postId;
 	private int userId;
-	private String comment;
+	private String content;
 	private Date createdAt;
 	private Date updatedAt;
 	
@@ -28,12 +29,11 @@ public class Comment {
 	public void setUserId(int userId) {
 		this.userId = userId;
 	}
-	
-	public String getComment() {
-		return comment;
+	public String getContent() {
+		return content;
 	}
-	public void setComment(String comment) {
-		this.comment = comment;
+	public void setContent(String content) {
+		this.content = content;
 	}
 	public Date getCreatedAt() {
 		return createdAt;
@@ -48,4 +48,4 @@ public class Comment {
 		this.updatedAt = updatedAt;
 	}
 	
-}
+}	

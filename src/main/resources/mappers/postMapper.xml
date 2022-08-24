@@ -4,68 +4,66 @@
  
  <mapper namespace="com.yoojung0318.Dailygram.post.DAO.PostDAO">
  	<insert id="insertPost" parameterType="map">
- 		INSERT INTO
- 					`daily_post`
- 		(
- 			`userid`
- 			, `content`
- 			, `imagePath`
- 			, `createdAt`
- 			, `updatedAt`		
- 		)			
- 		VALUES
- 		(
- 			#{userId}
- 			, #{content}
- 			, #{imagePath}
- 			, now()
- 			, now()
- 		
- 		)
- 	
- 	</insert>
+		INSERT INTO 
+			`post`
+		(
+			`userId`
+			, `content`
+			, `imagePath`
+			, `createdAt`
+			, `updatedAt`
+		)
+		VALUE
+		(
+			#{userId}
+			, #{content}
+			, #{imagePath}
+			, now()
+			, now()
+		)
+	
+	
+	</insert>
+	
  
  	<select id="selectPostList" parameterType="int"
 	 resultType="com.yoojung0318.Dailygram.post.model.Post">
 	 	
-	 	SELECT
-	 		`id`
-	 		,`userid`
-	 		, `content`
-	 		, `imagePath`
-	 		, `createdAt`
-	 		, `updatedAt`
-	 	FROM
-	 		`daily_post`
-
-	 	ORDER BY
-	 		`id` DESC	
-	 
-	 </select>
+		SELECT 
+				`id`
+				, `userId`
+				, `content`
+				, `imagePath`
+				, `createdAt`
+				, `updatedAt`
+		FROM 
+				`post`
+		ORDER BY
+				`id`  DESC
+	
+	</select>
  
 	<select id="selectPost"  parameterType="int"
 	 resultType="com.yoojung0318.Dailygram.post.model.Post">
-		 SELECT
-		 		`id`
-		 		,`userid`
-		 		, `content`
-		 		, `imagePath`
-		 		, `createdAt`
-		 		, `updatedAt`
-		 	FROM
-		 		`daily_post`
-	 	WHERE
-	 		`id` = #{postId}
+		 SELECT 
+				`id`
+				, `userId`
+				, `content`
+				, `imagePath`
+				, `createdAt`
+				, `updatedAt`
+		FROM 
+				`post`
+		WHERE
+				`id` = #{postId}
 	 </select>
 	 
  	<delete id="deletePost" parameterType="int">
- 		DELETE 
- 		
- 		FROM	`daily_post`
- 		
- 		WHERE
- 				`id` = #{postId}
-		AND	    `userId` = #{userId}			
- 				
- 	</delete>
+		DELETE FROM
+			`post`
+		WHERE
+			`id` = #{postId}
+			AND `userId` = #{userId}
+	</delete>
+
  </mapper>

@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>로그인</title>
+<<title>로그인</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 	
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -19,7 +19,7 @@
 		<c:import url="/WEB-INF/jsp/include/header.jsp" />
 		<section class="content d-flex justify-content-center">
 			<div class="col-4">
-				<img src="https://images.pexels.com/photos/1267291/pexels-photo-1267291.jpeg" class="mainImg" width="450">
+				<img src="https://images.pexels.com/photos/1267291/pexels-photo-1267291.jpeg" class="mainImg" width="300">
 			</div>
 			<div>
 				<div class="login-box d-flex justify-content-center align-items-start bg-white  border rounded">		
@@ -43,53 +43,53 @@
 	</div>
 	
 	<script>
-	$(document).ready(function() {
-		$("#loginForm").on("submit", function(e) {
-			// 해당 이벤트가 가지고 있는 기능을 비활성화 
-			e.preventDefault();
-			
-			// loginId 와 password 를 통해서 로그인 진행
-			// 로그인 api 호출
-			let loginId = $("#loginIdInput").val();
-			let password = $("#passwordInput").val();
-			
-			if(loginId == "") {
+		$(document).ready(function() {
+			$("#loginForm").on("submit", function(e) {
+				// 해당 이벤트가 가지고 있는 기능을 비활성화 
+				e.preventDefault();
 				
-				alert("아이디를 입력하세요");
-				return ;
-			}
-			
-			if(password == "") {
-				alert("비밀번호를 입력하세요");
-				return;
-			}
-			
-			$.ajax({
-				type:"post",
-				url:"/user/signin",
-				data:{"loginId":loginId, "password":password},
-				success:function(data) {
+				// loginId 와 password 를 통해서 로그인 진행
+				// 로그인 api 호출
+				let loginId = $("#loginIdInput").val();
+				let password = $("#passwordInput").val();
+				
+				if(loginId == "") {
 					
-					if(data.result == "success") {
-						location.href = "/post/timeLine/view";
-					} else {
-						alert("아이디/비밀번호를 확인하세요!!");
-					}
-					
-				},
-				error:function() {
-					alert("로그인 에러");
+					alert("아이디를 입력하세요");
+					return ;
 				}
+				
+				if(password == "") {
+					alert("비밀번호를 입력하세요");
+					return;
+				}
+				
+				$.ajax({
+					type:"post",
+					url:"/user/signin",
+					data:{"loginId":loginId, "password":password},
+					success:function(data) {
+						
+						if(data.result == "success") {
+							location.href = "/post/timeline/view";
+						} else {
+							alert("아이디/비밀번호를 확인하세요!!");
+						}
+						
+					},
+					error:function() {
+						alert("로그인 에러");
+					}
+				});
+				
+				
+				
 			});
 			
 			
-			
 		});
-		
-		
-	});
-
-</script>
+	
+	</script>
 
 </body>
 </html>

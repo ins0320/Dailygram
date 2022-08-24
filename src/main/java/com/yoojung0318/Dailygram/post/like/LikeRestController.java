@@ -15,51 +15,52 @@ import com.yoojung0318.Dailygram.post.like.bo.LikeBO;
 
 @RestController
 public class LikeRestController {
-
+	
 	@Autowired
 	private LikeBO likeBO;
+	
 	@GetMapping("/post/like")
-	public Map<String, String> like (
-			@RequestParam("postId")int postId
-			, HttpServletRequest request){
+	public Map<String, String> like(
+			@RequestParam("postId") int postId
+			, HttpServletRequest request) {
 		
 		HttpSession session = request.getSession();
 		int userId = (Integer)session.getAttribute("userId");
 		
-		int count = likeBO.addLike(postId,userId);
-
-		Map<String, String> result = new HashMap<>();
+		Map<String, String> map = new HashMap<>();
+		
+		int count = likeBO.addLike(postId, userId);
+		
 		if(count == 1) {
-			result.put("result", "success");
-		}else {
-			result.put("result", "fail");
+			map.put("result", "success");
+		} else {
+			map.put("result", "fail");
 		}
 		
-		return result;
+		return map;
+		
 	}
 	
-	//좋아요 취소 api
+	
+	// 좋아요 취소 api
 	@GetMapping("/post/unlike")
 	public Map<String, String> unlike(
 			@RequestParam("postId") int postId
-			,HttpServletRequest request){
+			, HttpServletRequest request) {
 		
-			HttpSession session = request.getSession();
+		HttpSession session = request.getSession();
 		
-			int userId = (Integer)session.getAttribute("userId");
-			
-			int count = likeBO.unLike(postId, userId);
-			
-			Map<String, String> result = new HashMap<>();
-			if(count == 1) {
-				result.put("result", "success");
-			}else {
-				result.put("result", "fail");
-			}
-			
-			return result;
+		int userId = (Integer)session.getAttribute("userId");
+		
+		int count = likeBO.unlike(postId, userId);
+		
+		Map<String, String> map = new HashMap<>();
+		if(count == 1) {
+			map.put("result", "success");
+		} else {
+			map.put("result", "fail");
+		}
+		return map;
 	}
-	
-	
-	
+
 }

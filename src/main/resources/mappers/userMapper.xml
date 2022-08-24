@@ -6,7 +6,7 @@
 	
 	<insert id="insertUser" parameterType="map">
 		INSERT INTO
-			`daily_user`
+					`user`
 		(
 			`loginId`
 			, `password`
@@ -34,7 +34,7 @@
 	SELECT 
 		count(1)
 	FROM
-	 	`daily_user`
+	 	`user`
 	WHERE	
 		`loginId` = #{loginId}
 	</select>
@@ -50,7 +50,7 @@
 			, `createdAt`
 			, `updatedAt`
  		FROM 
- 			`daily_user`
+ 			`user`
 		WHERE
 			`loginId` = #{loginId}
 			AND `password` = #{password}
@@ -58,7 +58,7 @@
  	
  	</select>
  	
- 	<select id="selectUserByID" parameterType="int"
+ 	<select id="selectUserById" parameterType="int"
  	resultType="com.yoojung0318.Dailygram.user.model.User">
  	SELECT 
  			`id`
@@ -69,7 +69,7 @@
 			, `createdAt`
 			, `updatedAt`
  		FROM 
- 			`daily_user`
+ 			`user`
  		WHERE
  			`id` = #{id}	
  	

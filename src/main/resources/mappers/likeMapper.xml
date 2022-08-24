@@ -5,57 +5,59 @@
  
  <mapper namespace="com.yoojung0318.Dailygram.post.like.dao.LikeDAO">
  
-  <insert id="insertLike" parameterType="int">
-  
-  	INSERT INTO
-  				`daily_like`
-  	(
-  		
-  		`userId`
-  		,`postId`
-  		,`createdAt`
-  	)	
-  	
-  	VALUES
-  	( 	
-  		#{userId}
-  		,#{postId}
-  		,now()
-  	)		
-  </insert>
-  
-
-  <select id="selectcountLike" parameterType="int"
-  resultType="int">
-  	SELECT	 			
-  			count(*)																	
-   	FROM 
-   			`daily_like`
-   			
-	WHERE
-			`postId` = #{postId} 	
-  
-  </select>
-
-	 <delete id="deletelike" parameterType="map">
-		DELETE 
-				`userId`
-				,`postId`
-		FROM	
-				`daily_like`
+  <insert id="insertLike" parameterType="map">
+		INSERT INTO
+			`like`
+		(
+			`postId`
+			, `userId`
+			, `createdAt`
+		)
+		VALUES (
+			#{postId}
+			, #{userId}
+			, now()
+		)
+	
+	</insert>
+	
+	<delete id="deleteLike" parameterType="map">
+	
+		DELETE FROM
+			`like`
 		WHERE
-				`postId` = #{postId}
-		AND 	 `userId` = #{userId}				
+			`postId` = #{postId}
+			AND `userId` = #{userId}
+	
 	</delete>
-
-	<delete id="deletecountLikeByPostId" parameterType="map">
-		DELETE 
-				`userId`
-				,`postId`
-		FROM	
-				`daily_like`
+	
+	<select id="selectCountLike" parameterType="int" resultType="int">
+		SELECT 
+			count(1)
+		FROM
+			`like`
 		WHERE
-				`postId` = #{postId}	
+			`postId` = #{postId}
+	
+	</select>
+	
+	<select id="selectCountLikeByPostUserId" parameterType="map" resultType="int">
+		SELECT 
+			count(1)
+		FROM
+			`like`
+		WHERE
+			`postId` = #{postId}
+			AND `userId` = #{userId}
+	
+	</select>
+	
+	<delete id="deleteLikeByPostId" parameterType="int">
+		DELETE FROM
+			`like`
+		WHERE
+			`postId` = #{postId}
+	
 	</delete>
   
  </mapper>

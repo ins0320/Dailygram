@@ -9,18 +9,14 @@ import com.yoojung0318.Dailygram.post.comment.model.Comment;
 
 @Repository
 public interface CommentDAO {
-
+	
 	public int insertComment(
 			@Param("postId") int postId
-			,@Param("userId")int userId
-			,@Param("content") String content);
+			, @Param("userId") int userId
+			, @Param("content") String content);
 	
-
-	public int selectComment(
-			@Param("postId") int postId
-			,@Param("userId") int userId);
-
 	public List<Comment> selectCommentListByPostId(@Param("postId") int postId);
-
-	public int deleteComment( @Param("postId") int postId);
+	
+	public int deleteComment(@Param("postId") int postId);
+	
 }

@@ -39,7 +39,8 @@ public class UserBO {
 	
 	// id로 사용자 정보 조회 기능
 	public User getUserById(int id) {
-	
-		return userDAO.selectUserByID(id);
+		return userDAO.selectUserById(id);
 	}
+	
+	
 }

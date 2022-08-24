@@ -4,45 +4,32 @@
  
  <mapper namespace="com.yoojung0318.Dailygram.post.comment.dao.CommentDAO">
  
-  <insert id="insertComment" parameterType="map">
-  	INSERT INTO
-  				`daily_comment`
-  	(
-  	
-  		`userId`
-  		,`postId`
-  		,`comment`
-  		,`createdAt`
-  		,`updatedAt`
-  	)	
-  	
-  	VALUES
-  	( 	
-  		#{userId}
-  		,#{postId}
-  		,#{content}
-  		,now()
-  		,now()
-  	)		
+
+
+	<insert id="insertComment" parameterType="map">
+	
+		INSERT INTO 
+			`comment`
+		(
+			`userId`
+			, `postId`
+			, `content`
+			, `createdAt`
+			, `updatedAt`
+		)
+		VALUES 
+		(
+			#{userId}
+			, #{postId}
+			, #{content}
+			, now()
+			, now()
+		)
+	
+	</insert>	
   
-  </insert>
-  <select id="selectComment" parameterType="map"
-  resultType="com.yoojung0318.Dailygram.post.comment.dao.CommentDAO">
   
-  	SELECT  
-  				`userId`,
-  				`postId`,
-  				`comment`
-  			
-  	FROM			
-  				`daily_comment`
-  	WHERE
-  			`userId` = #{userId}
-	AND		`postId` = #{postId} 		
-  				
-  				
-  
-  </select>
+
   
 
   <select id="selectCommentListByPostId" parameterType="int"
@@ -51,23 +38,21 @@
 			`id`
 			, `postId`
 			, `userId`
-			, `comment`
+			, `content`
 			, `createdAt`
 			, `updatedAt`
 		FROM
-			`daily_comment`
+			`comment`
 		WHERE
 			`postId` = #{postId}
 	
 	</select>
 	<delete id="deleteComment" parameterType="int">
+		DELETE FROM
+					`comment`
+		WHERE 
+			`postId` = #{postId}
 	
-			DELETE 		
-					`postId`
-			FROM
-					`daily_like`
-			WHERE
-					`postId` = #{postId}				
 	</delete>
 
  </mapper>

@@ -19,7 +19,7 @@ import com.yoojung0318.Dailygram.user.model.User;
 
 @Service
 public class PostBO {
-//저장,접근경로 DAO 전달
+	
 	@Autowired
 	private PostDAO postDAO;
 	
@@ -32,83 +32,72 @@ public class PostBO {
 	@Autowired
 	private CommentBO commentBO;
 	
-
-	public int addPost(int userId, String content, MultipartFile file) {
-
-
 	
+	public int addPost(int userId, String content, MultipartFile file) {
+		// 파일을 저장하고, 파일 접근 경로를 DAO로 전달
 		
-		//파일을 저장하고, 파일 접근 경로를 DAO로 전달
-		//해당 파일을 외부에서 접근할 수 있는 경로를 만들어서 dao로 전달한다.(DB에 저장하기 위해)
-		String imagePath = FileManagerService.saveFile(userId, file); //외부에서 접근가능한 경로
-			
-		//파일 저장이 실패한 경우
+		String imagePath = FileManagerService.saveFile(userId, file);
+		
+		// 파일 저장이 실패한경우 
 		if(imagePath == null) {
 			
-			return -1; // restcontroller에 return 값이 -1로 전달되어, error로 처리됨
+			return -1;
 		}
-		return postDAO.insertPost(userId, content, imagePath);
 		
+		return postDAO.insertPost(userId, content, imagePath);
 	}
 	
-	//userId가 일치하는 메모 리스트 조회
-	public List<PostDetail> getPostList() {
+	public List<PostDetail> getPostList(int loginUserId) {
 		
-		List<PostDetail> postDetailList = new ArrayList<>();		//post안에 있는 userid별로 조회
+		List<PostDetail> postDetailList = new ArrayList<>();
 		
-		List<Post> postList = postDAO.selectPostList();	
+		List<Post> postList = postDAO.selectPostList();
 		
 		for(Post post : postList) {
-
-			int userId = post.getUserid();
+			
+			int userId = post.getUserId();
 			int postId = post.getId();
-			//user 테이블 조회
-			//userBO를 통해서 userId와 일치하는 사용자 정보 조회
+			// user 테이블 조회
+			// userBo를 통해서 userId 와 일치하는 사용자 정보 조회
 			User user = userBO.getUserById(userId);
-			
-			//좋아요 개수를 가져와서 조회
-			int like = likeBO.countLike(postId);
 			int likeCount = likeBO.countLike(postId);
-			
 			List<CommentDetail> commentList = commentBO.getCommentListByPostId(postId);
+			boolean isLike = likeBO.isLike(postId, loginUserId);
+			
 			// 게시글과 사용자 정보를 합치는 과정
 			PostDetail postDetail = new PostDetail();
 			postDetail.setPost(post);
 			postDetail.setUser(user);
 			postDetail.setLikeCount(likeCount);
 			postDetail.setCommentList(commentList);
+			postDetail.setLike(isLike);
 			
 			postDetailList.add(postDetail);
-
-			
-			
 		}
+		
 		return postDetailList;
 	}
 	
-		public int deletePost(int postId,int userId) {
-			Post post = postDAO.selectPost(postId);	
-			int count = postDAO.deletePost(postId, userId);
-			
-			if(count == 1) {
-				
-				//파일삭제
-				//파일경로 알아오기
-				
-						
-				FileManagerService.removeFile(post.getImagePath());
-				
-				//댓글삭제
-				commentBO.deleteComment(postId);
-				
-				//좋아요 삭제
-				likeBO.deleteLikeByPostId(postId);
-				
-			}
-			return count;
+	public int deletePost(int postId, int userId) {
+		
+		Post post = postDAO.selectPost(postId);
+		int count = postDAO.deletePost(postId, userId);
+		
+		if(count == 1) {
+			// 파일 삭제 
+			// 파일 경로 알아 오기 
+			FileManagerService.removeFile(post.getImagePath());
 			
 			
-		}
+			// 댓글 삭제
+			commentBO.deleteComment(postId);
+			//좋아요 삭제
+			likeBO.deleteLikeByPostId(postId);
+		} 
+		
+		return count;
+		
+	}
 		
 		
 }

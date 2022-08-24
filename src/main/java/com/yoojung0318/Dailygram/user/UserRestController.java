@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.yoojung0318.Dailygram.user.bo.UserBO;
 import com.yoojung0318.Dailygram.user.model.User;
 
-@RestController // @Controller + @ResponseBody
+@RestController
 public class UserRestController {
 	
 	@Autowired

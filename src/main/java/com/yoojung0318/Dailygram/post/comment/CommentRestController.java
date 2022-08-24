@@ -20,24 +20,27 @@ public class CommentRestController {
 	private CommentBO commentBO;
 	
 	@PostMapping("/post/comment/create")
-	public Map<String, String> createCommnet(
+	public Map<String, String> createComment(
 			@RequestParam("postId") int postId
 			, @RequestParam("content") String content
-			, HttpServletRequest request
-			){
+			, HttpServletRequest request) {
+		
 		HttpSession session = request.getSession();
 		int userId = (Integer)session.getAttribute("userId");
 		
-		int count = commentBO. addComment(postId, userId, content);
-
-		Map<String, String> result = new HashMap<>();
+		Map<String, String> map = new HashMap<>();
+		
+		int count = commentBO.addComment(postId, userId, content);
+		
 		if(count == 1) {
-			result.put("result", "success");
-		}else {
-			result.put("result", "fail");
+			map.put("result", "success");
+			
+		} else {
+			map.put("result", "fail");
 		}
 		
-		return result;
+		return map;
+		
 	}
 	
 }
