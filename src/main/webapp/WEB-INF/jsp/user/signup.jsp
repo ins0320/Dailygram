@@ -16,7 +16,7 @@
 </head>
 <body>
 	<div id="wrap">
-		
+		<c:import url="/WEB-INF/jsp/include/header.jsp" />
 		<section class="content d-flex justify-content-center my-5">
 			<div>
 				<div class="login-box d-flex justify-content-center align-items-start bg-white  border rounded">
