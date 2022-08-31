@@ -32,7 +32,8 @@
 							<button id="loginBtn" type="submit" class="btn btn-primary btn-block mt-3">로그인</button>
 							<hr/>
 							<div class="mt-4 p-3 d-flex justify-content-center align-items-start bg-white  border rounded">
-							<a href="/user/signup/view">가입하기</a>
+								<a href="/user/signup/view">가입하기</a>
+							</div>
 						</form>
 					</div>
 					
